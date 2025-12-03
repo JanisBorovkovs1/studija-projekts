@@ -1,8 +1,19 @@
-body {
+body{
     background-color: aliceblue;
 }
-div {
-  width: 300px;
-  padding: 10px;
-  margin: 20px;
+.login{
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    background-color: rgb(163, 184, 202);
+    padding: 50px;
+}
+img {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.basketbolaDati{
+    width: 1000px;
+    margin: 0 auto;
 }
