@@ -4,30 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Īre</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<table>
-  <tr>
-    <th>Atrašanās vieta</th>
-    <th>Īpašnieka kontaktinformācija</th>
-    <th>Vērtējums</th>
-    <th>Cena</th>
-    <th><button>Izveidot savu!</button></th>
-  </tr>
-  <tr>
-    <td>Rīga</td>
-    <td>janisborovkovs@gmail.com</td>
-    <td>5</td>
-    <td>10 EUR/h</td>
-    <td><button>Pieteikties</button></td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-    <td>Germany</td>
-    <td>Germany</td>
-  </tr>
-</table>
+
+<body class="p-4 bg-light">
+
+<div class="container">
+    <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Atrašanās vieta</th>
+                <th>Īpašnieka kontaktinformācija</th>
+                <th>Vērtējums</th>
+                <th>Cena</th>
+                <th>
+                    <button class="btn btn-success btn-sm">Izveidot savu!</button>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Rīga</td>
+                <td>janisborovkovs@gmail.com</td>
+                <td>5</td>
+                <td>10 EUR/h</td>
+                <td><button class="btn btn-primary btn-sm">Pieteikties</button></td>
+            </tr>
+            <tr>
+                <td>Jelgava</td>
+                <td>studija123@inbox.lv</td>
+                <td>4</td>
+                <td>7.50 EUR/h</td>
+                <td><button class="btn btn-primary btn-sm">Pieteikties</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
