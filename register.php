@@ -14,4 +14,9 @@ $sql = "INSERT INTO users (email, password) VALUES (?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $email, $hashed);
 
-$stmt->execute()
+if ($stmt->execute()) {
+    echo "Reģistrācija veiksmīga! <a href='index.html'>Pieslēgties</a>"
+} else {
+    echo "Kļūda" . $stmt->error;
+}
+?>
