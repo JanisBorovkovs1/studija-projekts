@@ -10,3 +10,5 @@ if ($password !== $confirm) {
 
 
 $sql = "INSERT INTO users (email, password) VALUES (?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $email, $password);
