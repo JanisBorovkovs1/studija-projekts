@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reģistrēties</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="login">
+    <form action="next.html" method="post">
+        <h3 class="mb-3">Reģistrēties</h3>
+
+        <div class="form-group">
+            <input name="email" type="email" class="form-control" placeholder="Ievadi e-pastu" required>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <input name="password" type="password" class="form-control" placeholder="Parole" required>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <input name="confirm_password" type="password" class="form-control" placeholder="Apstiprini paroli" required>
+        </div>
+        <br>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a href="index.html" class="btn btn-secondary">Back to login</a>
+    </form>
+</div>
+</body>
+</html>
