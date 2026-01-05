@@ -15,7 +15,8 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $email, $hashed);
 
 if ($stmt->execute()) {
-    echo "Reģistrācija veiksmīga! <a href='index.html'>Pieslēgties</a>";
+    header("Location: index.html");
+    exit();
 } else {
     echo "Kļūda" . $stmt->error;
 }
