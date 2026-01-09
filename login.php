@@ -27,7 +27,7 @@ if ($row = $result->fetch_assoc()) {
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['email'] = $row['email'];
 
-        header("Location: next.html");
+        header("Location: next.php");
         exit();
 
     } else {
