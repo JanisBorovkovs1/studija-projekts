@@ -1,10 +1,9 @@
 <?php
+$mysqli = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
 
-$mysqli = mysqli_connect ("localhost","u547027111_mvg","MVGskola1");
-mysqli_select_db ($mysqli,"u547027111_mvg");
-$mysqli->query ("set character_set_client='utf8'");
-$mysqli->query ("set character_set_results='utf8'");
-$mysqli->query ("set collation_connection='utf81_general_ci'");
-$mysqli->query ("SET NAMES utf8");
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+$mysqli->set_charset("utf8mb4");
 ?>
-
