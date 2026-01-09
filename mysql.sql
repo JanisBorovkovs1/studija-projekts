@@ -1,5 +1,4 @@
-CREATE DATABASE auth_demo;
-    CREATE TABLE users (
+CREATE TABLE jb_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL

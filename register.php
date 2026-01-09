@@ -10,7 +10,7 @@ if ($password !== $confirm) {
 
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO users (email, password) VALUES (?, ?)";
+$sql = "INSERT INTO jb_users (email, password) VALUES (?, ?)";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("ss", $email, $hashed);
 

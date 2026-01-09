@@ -10,10 +10,10 @@ if (mysqli_num_rows($result) > 0){
     while ($row = $result->fetch_assoc()){
         $_SESSION['id'] = $row['id_users'];
         }
-    header("Location: members.php");
+    header("Location: next.html");
     }
 else{
-    header("Location: index.php");
+    header("Location: index.html");
 }
 
 
