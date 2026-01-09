@@ -20,3 +20,21 @@ $stmt->execute();
 
 $result = $stmt->get_result();
 
+if ($row = $result->fetch_assoc()) {
+
+    if (password_verify($password, $row['password'])) {
+
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['email'] = $row['email'];
+
+        header("Location: next.html");
+        exit();
+
+    } else {
+        echo "Incorrect password";
+    }
+
+} else {
+    echo "User not found";
+}
+
