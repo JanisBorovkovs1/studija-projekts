@@ -1,9 +1,9 @@
 <?php
-require 'db.php';
 session_start();
+require 'db.php';
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+$email = $_POST['login'] ?? '';
+$password = $_POST['pass'] ?? '';
 
 if (empty($email)) {
         $error .= '<p class="error">Please enter email.</p>';
