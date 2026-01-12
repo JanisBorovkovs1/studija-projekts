@@ -24,7 +24,7 @@ if ($row = $result->fetch_assoc()) {
 
     if (password_verify($password, $row['password'])) {
 
-        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['id_users'] = $row['id'];
         $_SESSION['email'] = $row['email'];
 
         header("Location: next.php");
