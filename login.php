@@ -1,6 +1,4 @@
 <?php
-echo "LOGIN.PHP RUNNING";
-exit();
 session_start();
 require 'db.php';
 
