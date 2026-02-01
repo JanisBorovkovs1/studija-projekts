@@ -14,12 +14,11 @@ $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
     if (password_verify($password, $row['password'])) {
 
-        $_SESSION['id_users'] = $row['id'];
+        $_SESSION['id_users'] = $row['id_users'];
         $_SESSION['email'] = $row['email'];
 
         header("Location: next.php");
         exit();
-
     } else {
         echo "Incorrect password";
     }
