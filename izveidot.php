@@ -20,7 +20,7 @@ if (!isset($_SESSION['id_users'])) {
 <body class="p-4 bg-light">
 
 <div class="container">
-    <form action="next.html" method="post">
+    <form action="save_listing.php" method="post">
     <table class="table table-striped table-bordered align-middle">
         <thead class="table-dark">
             <tr>
@@ -33,10 +33,10 @@ if (!isset($_SESSION['id_users'])) {
         </thead>
          <tbody>
             <tr>
-                <td><input type="text" class="form-control" placeholder="Piem. Rīga"></td>
-                <td><input type="email" class="form-control" placeholder="Email"></td>
-                <td><input type="text" class="form-control" placeholder="Apraksts"></td>
-                <td><input type="number" class="form-control" step="0.01" placeholder="Cena EUR/h"></td>
+                <td><input type="text" name="location" class="form-control" required></td>
+                <td><input type="email" name="contact" class="form-control" required></td>
+                <td><input type="text" name="description" class="form-control" required></td>
+                <td><input type="number" name="price" step="0.01" class="form-control" required></td>
             </tr>
         </tbody>
     </table>

@@ -5,6 +5,9 @@ if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
+$conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
+$result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
+
 ?>
 
 
@@ -38,31 +41,27 @@ if (!isset($_SESSION['id_users'])) {
         </thead>
 
         <tbody>
+            <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
-                <td>Rīga</td>
-                <td>janisborovkovs@gmail.com</td>
-                <td>5</td>
-                <td>10 EUR/h</td>
+                <td><?= htmlspecialchars($row['location']) ?></td>
+                <td><?= htmlspecialchars($row['contact']) ?></td>
+                <td>⭐</td>
+                <td><?= htmlspecialchars($row['price']) ?> EUR/h</td>
                 <td>
-                <form action="pieteikties.php">
-                    <button type="submit" class="btn btn-success btn-sm">Pieteikties</button>
-                </form>
-                </td>
-            </tr>
-            <tr>
-                <td>Jelgava</td>
-                <td>studija123@inbox.lv</td>
-                <td>4</td>
-                <td>7.50 EUR/h</td>
-                <td>
-                <form action="pieteikties.php">
-                    <button type="submit" class="btn btn-success btn-sm">Pieteikties</button>
+                    <form action="pieteikties.php">
+                        <button type="submit" class="btn btn-success btn-sm">Pieteikties</button>
+        </form>
+    </td>
+</tr>
+<?php endwhile; ?>
+
                 </form>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+<?php $conn->close(); ?>
 
 </body>
 </html>

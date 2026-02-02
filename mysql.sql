@@ -4,3 +4,11 @@ CREATE TABLE jb_users (
     password VARCHAR(100) NOT NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE jb_listings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    location VARCHAR(255),
+    contact VARCHAR(255),
+    description TEXT,
+    price DECIMAL(6,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
