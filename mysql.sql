@@ -10,5 +10,5 @@ CREATE TABLE jb_listings (
     contact VARCHAR(255),
     description TEXT,
     price DECIMAL(6,2),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
