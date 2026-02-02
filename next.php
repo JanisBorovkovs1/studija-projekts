@@ -19,7 +19,7 @@ if (!isset($_SESSION['id_users'])) {
 </head>
 
 <body class="p-4 bg-light">
-
+<a href="logout.php" class="btn btn-danger">Logout</a>
 <div class="container">
     <table class="table table-striped table-bordered align-middle">
         <thead class="table-dark">
