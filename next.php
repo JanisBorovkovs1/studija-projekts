@@ -29,7 +29,7 @@ if (!isset($_SESSION['id_users'])) {
                 <th>Vērtējums</th>
                 <th>Cena</th>
                 <th>
-                <form action="izveidot.html">
+                <form action="izveidot.php">
                     <button type="submit" class="btn btn-success btn-sm">Izveidot savu!</button>
                 </form>
 
@@ -44,7 +44,7 @@ if (!isset($_SESSION['id_users'])) {
                 <td>5</td>
                 <td>10 EUR/h</td>
                 <td>
-                <form action="pieteikties.html">
+                <form action="pieteikties.php">
                     <button type="submit" class="btn btn-success btn-sm">Pieteikties</button>
                 </form>
                 </td>
@@ -55,7 +55,7 @@ if (!isset($_SESSION['id_users'])) {
                 <td>4</td>
                 <td>7.50 EUR/h</td>
                 <td>
-                <form action="pieteikties.html">
+                <form action="pieteikties.php">
                     <button type="submit" class="btn btn-success btn-sm">Pieteikties</button>
                 </form>
                 </td>

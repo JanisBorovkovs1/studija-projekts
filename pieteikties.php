@@ -19,7 +19,7 @@ if (!isset($_SESSION['id_users'])) {
 <body class="p-4 bg-light">
 
 <div class="container">
-    <form action="next.html" method="post">
+    <form action="next.php" method="post">
     <table class="table table-striped table-bordered align-middle">
         <thead class="table-dark">
             <tr>
