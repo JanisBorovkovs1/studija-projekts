@@ -20,8 +20,8 @@ $contact = $_POST['contact'];
 $description = $_POST['description'];
 $price = $_POST['price'];
 
-$sql = "INSERT INTO jb_listings (location, contact, description, price)
-        VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO jb_listings (location, contact, description, price, created_at)
+        VALUES (?, ?, ?, ?, NOW())";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sssd", $location, $contact, $description, $price);
