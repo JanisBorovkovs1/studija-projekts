@@ -5,6 +5,43 @@ if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
+
+require 'db.php';
+
+// Ja forma ir iesniegta
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
+
+    $listing_id = $_POST['listing_id'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $applicant_id = $_SESSION['id_users'];
+
+    // Iegūt īpašnieka ID no saraksta
+    $stmt = $mysqli->prepare("SELECT owner_id FROM jb_listings WHERE id = ?");
+    $stmt->bind_param("i", $listing_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    $owner_id = $row['owner_id'];
+
+    // Saglabāt pieteikumu datubāzē
+    $stmt = $mysqli->prepare("
+        INSERT INTO jb_applications (listing_id, owner_id, applicant_id, message)
+        VALUES (?, ?, ?, ?)
+    ");
+
+    $message = "Email: $email | Phone: $phone";
+
+    $stmt->bind_param("iiis", $listing_id, $owner_id, $applicant_id, $message);
+    $stmt->execute();
+
+    header("Location: next.php");
+    exit();
+}
+
+// Ja pirmoreiz atver lapu
+$listing_id = $_POST['listing_id'] ?? null;
 ?>
 
 <!DOCTYPE html>

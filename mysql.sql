@@ -12,3 +12,14 @@ CREATE TABLE jb_listings (
     price DECIMAL(6,2),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE jb_applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    listing_id INT NOT NULL,
+    owner_id INT NOT NULL,
+    applicant_id INT NOT NULL,
+    message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read TINYINT DEFAULT 0
+);
+ALTER TABLE jb_applications 
+MODIFY is_read TINYINT(1) NOT NULL DEFAULT 0;
