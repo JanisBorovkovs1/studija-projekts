@@ -19,6 +19,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Īre</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body class="p-4 bg-light">
@@ -48,19 +49,19 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
                 <td>⭐</td>
                 <td><?= htmlspecialchars($row['price']) ?> EUR/h</td>
                 <td>
-                    <form action="pieteikties.php">
-                        <button type="submit" class="btn btn-success btn-sm">Pieteikties</button>
-        </form>
-    </td>
-</tr>
-<?php endwhile; ?>
-
-                </form>
+                    <form action="pieteikties.php" method="post">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            Pieteikties
+                        </button>
+                    </form>
                 </td>
             </tr>
+            <?php endwhile; ?>
         </tbody>
     </table>
+
 </div>
+
 <?php $conn->close(); ?>
 
 </body>
