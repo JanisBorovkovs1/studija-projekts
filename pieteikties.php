@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id_users'])) {
+    header("Location: index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,23 +19,19 @@
 <body class="p-4 bg-light">
 
 <div class="container">
-    <form action="next.html" method="post">
+    <form action="next.php" method="post">
     <table class="table table-striped table-bordered align-middle">
         <thead class="table-dark">
             <tr>
-                <th>Atrašanās vieta</th>
-                <th>Īpašnieka kontaktinformācija</th>
-                <th>Apraksts</th>
-                <th>Cena</th>
+                <th>E-pasts</th>
+                <th>Tel. nr.</th>
                 </th>
             </tr>
         </thead>
          <tbody>
             <tr>
-                <td><input type="text" class="form-control" placeholder="Piem. Rīga"></td>
-                <td><input type="email" class="form-control" placeholder="Email"></td>
-                <td><input type="text" class="form-control" placeholder="Apraksts"></td>
-                <td><input type="number" class="form-control" step="0.01" placeholder="Cena EUR/h"></td>
+                <td><input type="email" class="form-control" placeholder="Enter email"></td>
+                <td><input type="number" class="form-control" placeholder="Phone number"></td>
             </tr>
         </tbody>
     </table>
