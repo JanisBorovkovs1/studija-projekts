@@ -30,11 +30,12 @@ img {
 
 .btn {
     transition: all 0.25s ease;
+    border-radius: 12px;
 }
 
 .btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
 }
 
 .btn:active {
