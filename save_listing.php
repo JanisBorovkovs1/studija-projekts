@@ -25,7 +25,7 @@ $sql = "INSERT INTO jb_listings (location, contact, description, price, owner_id
         VALUES (?, ?, ?, ?, ?, NOW())";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sssd", $location, $contact, $description, $price, $owner_id);
+$stmt->bind_param("sssdi", $location, $contact, $description, $price, $owner_id);
 $stmt->execute();
 
 $stmt->close();
