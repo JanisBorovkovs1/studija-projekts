@@ -19,16 +19,17 @@ $location = $_POST['location'];
 $contact = $_POST['contact'];
 $description = $_POST['description'];
 $price = $_POST['price'];
+$owner_id = $_SESSION['id_users'];
 
-$sql = "INSERT INTO jb_listings (location, contact, description, price, created_at)
-        VALUES (?, ?, ?, ?, NOW())";
+$sql = "INSERT INTO jb_listings (location, contact, description, price, owner_id, created_at)
+        VALUES (?, ?, ?, ?, ?, NOW())";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sssd", $location, $contact, $description, $price);
+$stmt->bind_param("sssd", $location, $contact, $description, $price, $owner_id);
 $stmt->execute();
 
 $stmt->close();
 $conn->close();
 
-header("Location: next.php"); // back to listings page
+header("Location: next.php");
 exit();
