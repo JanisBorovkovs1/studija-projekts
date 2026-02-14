@@ -5,7 +5,7 @@ CREATE TABLE jb_users (
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE jb_listings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_listings INT AUTO_INCREMENT PRIMARY KEY,
     owner_id INT NOT NULL,
     location VARCHAR(255),
     contact VARCHAR(255),

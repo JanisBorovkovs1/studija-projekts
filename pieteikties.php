@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 if (!isset($_SESSION['id_users'])) {
@@ -17,12 +21,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
     $applicant_id = $_SESSION['id_users'];
 
     // Iegūt īpašnieka ID no saraksta
-    $stmt = $mysqli->prepare("SELECT owner_id FROM jb_listings WHERE id = ?");
+    $stmt = $mysqli->prepare("SELECT owner_id FROM jb_listings WHERE id_listings = ?");
+
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
     $stmt->bind_param("i", $listing_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
 
+    if (!$row) {
+    die("Listing not found or invalid listing ID.");
+    }
+    
     $owner_id = $row['owner_id'];
 
     // Saglabāt pieteikumu datubāzē
@@ -41,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
 }
 
 // Ja pirmoreiz atver lapu
-$listing_id = $_POST['listing_id'] ?? null;
+$listing_id = $_GET['listing_id'] ?? $_POST['listing_id'] ?? null;
 ?>
 
 <!DOCTYPE html>

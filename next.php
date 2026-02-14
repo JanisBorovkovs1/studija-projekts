@@ -49,12 +49,10 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
                 <td>⭐</td>
                 <td><?= htmlspecialchars($row['price']) ?> EUR/h</td>
                 <td>
-                    <form action="pieteikties.php" method="post">
-                        <input type="hidden" name="listing_id" value="<?= $row['id'] ?>">
-                        <button type="submit" class="btn btn-success btn-sm">
+                    <a class="btn btn-primary btn-sm"
+                        href="pieteikties.php?listing_id=<?= $row['id_listings'] ?>">
                             Pieteikties
-                        </button>
-                    </form>
+                    </a>
                 </td>
             </tr>
             <?php endwhile; ?>
