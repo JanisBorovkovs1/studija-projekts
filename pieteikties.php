@@ -57,7 +57,8 @@ $listing_id = $_POST['listing_id'] ?? null;
 <body class="p-4 bg-light">
 
 <div class="container">
-    <form action="next.php" method="post">
+    <form method="post">
+        <input type="hidden" name="listing_id" value="<?php echo $listing_id; ?>">
     <table class="table table-striped table-bordered align-middle">
         <thead class="table-dark">
             <tr>
@@ -68,8 +69,8 @@ $listing_id = $_POST['listing_id'] ?? null;
         </thead>
          <tbody>
             <tr>
-                <td><input type="email" class="form-control" placeholder="Enter email"></td>
-                <td><input type="number" class="form-control" placeholder="Phone number"></td>
+                <td><input type="email" name="email" class="form-control" required></td>
+                <td><input type="number" name="phone" class="form-control" required></td>
             </tr>
         </tbody>
     </table>
