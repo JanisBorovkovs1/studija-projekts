@@ -16,8 +16,13 @@ if ($row = $result->fetch_assoc()) {
 
         $_SESSION['id_users'] = $row['id_users'];
         $_SESSION['email'] = $row['email'];
+        $_SESSION['role'] = $row['role'];
 
-        header("Location: next.php");
+        if ($row['role'] === 'admin') {
+            header("Location: admin_dashboard.php");
+        } else {
+            header("Location: next.php")
+        }
         exit();
     } else {
         echo "Incorrect password";

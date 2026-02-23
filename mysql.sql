@@ -2,7 +2,7 @@ CREATE TABLE jb_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
-    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE jb_listings (
     id_listings INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,3 +24,8 @@ CREATE TABLE jb_applications (
 );
 ALTER TABLE jb_applications 
 MODIFY is_read TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE jb_users 
+ADD role ENUM('user','admin') DEFAULT 'user';
+UPDATE jb_users 
+SET role = 'admin' 
+WHERE email = 'your@email.com';
