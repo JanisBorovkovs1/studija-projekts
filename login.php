@@ -21,7 +21,7 @@ if ($row = $result->fetch_assoc()) {
         if ($row['role'] === 'admin') {
             header("Location: admin_dashboard.php");
         } else {
-            header("Location: next.php")
+            header("Location: next.php");
         }
         exit();
     } else {
