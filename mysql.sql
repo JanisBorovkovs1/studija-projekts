@@ -24,8 +24,3 @@ CREATE TABLE jb_applications (
 );
 ALTER TABLE jb_applications 
 MODIFY is_read TINYINT(1) NOT NULL DEFAULT 0;
-ALTER TABLE jb_users 
-ADD role ENUM('user','admin') DEFAULT 'user';
-UPDATE jb_users 
-SET role = 'admin' 
-WHERE email = 'admin@gmail.com';
