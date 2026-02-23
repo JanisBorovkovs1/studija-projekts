@@ -25,40 +25,46 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
 <div class="container fade-in">
-    <table class="table table-striped table-bordered align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Atrašanās vieta</th>
-                <th>Īpašnieka kontaktinformācija</th>
-                <th>Vērtējums</th>
-                <th>Cena</th>
-                <th>
-                <form action="izveidot.php">
-                    <button type="submit" class="btn btn-success btn-sm">Izveidot savu!</button>
-                </form>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Studiju īres piedāvājumi</h2>
+        <a href="izveidot.php" class="btn btn-success">
+            + Izveidot savu
+        </a>
+    </div>
 
-                </th>
-            </tr>
-        </thead>
+    <div class="row g-4">
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    
+                    <!-- IMAGE -->
+                    <img src="uploads/<?= htmlspecialchars($row['image']) ?>" 
+                         class="card-img-top"
+                         style="height:200px; object-fit:cover;"
+                         alt="Studio image">
 
-        <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
-                <td><?= htmlspecialchars($row['location']) ?></td>
-                <td><?= htmlspecialchars($row['contact']) ?></td>
-                <td>⭐</td>
-                <td><?= htmlspecialchars($row['price']) ?> EUR/h</td>
-                <td>
-                    <a class="btn btn-primary btn-sm"
-                        href="pieteikties.php?listing_id=<?= $row['id_listings'] ?>">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            <?= htmlspecialchars($row['location']) ?>
+                        </h5>
+
+                        <p class="card-text text-muted mb-2">
+                            📞 <?= htmlspecialchars($row['contact']) ?>
+                        </p>
+
+                        <p class="fw-bold fs-5 mb-3">
+                            <?= htmlspecialchars($row['price']) ?> EUR/h
+                        </p>
+
+                        <a href="pieteikties.php?listing_id=<?= $row['id_listings'] ?>" 
+                           class="btn btn-primary mt-auto">
                             Pieteikties
-                    </a>
-                </td>
-            </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endwhile; ?>
+    </div>
 </div>
 
 <?php $conn->close(); ?>
