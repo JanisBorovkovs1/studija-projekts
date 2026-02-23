@@ -1,8 +1,8 @@
 <?php
 require 'db.php';
-$email = $_POST['email'];
-$password = $_POST['password'];
-$confirm = $_POST['confirm_password'];
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
+$confirm = $_POST['confirm_password' ?? ''];
 
 if ($password !== $confirm) {
     die("Paroles nesakrīt!");
@@ -15,7 +15,7 @@ $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("ss", $email, $hashed);
 
 if ($stmt->execute()) {
-    header("Location: index.html");
+    header("Location: index.php");
     exit();
 } else {
     echo "Kļūda" . $stmt->error;

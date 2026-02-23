@@ -28,4 +28,4 @@ ALTER TABLE jb_users
 ADD role ENUM('user','admin') DEFAULT 'user';
 UPDATE jb_users 
 SET role = 'admin' 
-WHERE email = 'your@email.com';
+WHERE email = 'admin@gmail.com';
