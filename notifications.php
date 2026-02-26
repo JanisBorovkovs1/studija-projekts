@@ -2,6 +2,11 @@
 session_start();
 require 'db.php';
 
+if (!isset($_SESSION['id_users'])) {
+    header("Location: index.php");
+    exit();
+}
+
 $owner_id = $_SESSION['id_users'];
 
 $stmt = $mysqli->prepare("

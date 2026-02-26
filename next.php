@@ -24,6 +24,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
+<a href="notifications.php" class="btn btn-warning">Notifications</a>
 <div class="container fade-in">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Studiju īres piedāvājumi</h2>
