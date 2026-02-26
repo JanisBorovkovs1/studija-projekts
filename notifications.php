@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require 'db.php';
 
@@ -10,7 +14,7 @@ if (!isset($_SESSION['id_users'])) {
 $owner_id = $_SESSION['id_users'];
 
 $stmt = $mysqli->prepare("
-    SELECT a.*, u.username 
+    SELECT a.*, u.email
     FROM jb_applications a
     JOIN jb_users u ON a.applicant_id = u.id_users
     WHERE a.owner_id = ?
@@ -26,7 +30,7 @@ $result = $stmt->get_result();
 
 <?php while ($row = $result->fetch_assoc()): ?>
     <div>
-        <strong><?= htmlspecialchars($row['username']) ?></strong>
+        <strong><?= htmlspecialchars($row['email']) ?></strong>
         applied to your listing.
         <br>
         <?= htmlspecialchars($row['created_at']) ?>
