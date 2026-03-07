@@ -12,36 +12,44 @@ if (!isset($_SESSION['id_users'])) {
 
 require 'db.php';
 
+$listing_id = $_GET['listing_id'] ?? $_POST['listing_id'] ?? null;
+
+if (!$listing_id) {
+    die("Invalid listing.");
+}
+
 // Ja forma ir iesniegta
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
 
-    $listing_id = $_POST['listing_id'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
+    $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
     $applicant_id = $_SESSION['id_users'];
-
     // Iegūt īpašnieka ID no saraksta
     $stmt = $mysqli->prepare("SELECT owner_id FROM jb_listings WHERE id_listings = ?");
-
-    if (!$stmt) {
-        die("Prepare failed: " . $mysqli->error);
-    }
     $stmt->bind_param("i", $listing_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
 
     if (!$row) {
-    die("Listing not found or invalid listing ID.");
+        die("Listing not found.");
     }
-    
+
     $owner_id = $row['owner_id'];
+
+    if ($owner_id == $applicant_id) {
+    die("You cannot apply to your own listing.");
+    }
 
     // Saglabāt pieteikumu datubāzē
     $stmt = $mysqli->prepare("
-        INSERT INTO jb_applications (listing_id, owner_id, applicant_id, message)
-        VALUES (?, ?, ?, ?)
+    INSERT INTO jb_applications (listing_id, owner_id, applicant_id, message)
+    VALUES (?, ?, ?, ?)
     ");
+
+    if (!$stmt) {
+        die("Insert prepare failed: " . $mysqli->error);
+    }
 
     $message = "Email: $email | Phone: $phone";
 
@@ -51,11 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
     header("Location: next.php");
     exit();
 }
-
-// Ja pirmoreiz atver lapu
-$listing_id = $_GET['listing_id'] ?? $_POST['listing_id'] ?? null;
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +80,6 @@ $listing_id = $_GET['listing_id'] ?? $_POST['listing_id'] ?? null;
             <tr>
                 <th>E-pasts</th>
                 <th>Tel. nr.</th>
-                </th>
             </tr>
         </thead>
          <tbody>
