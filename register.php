@@ -2,7 +2,7 @@
 require 'db.php';
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
-$confirm = $_POST['confirm_password' ?? ''];
+$confirm = $_POST['confirm_password'] ?? '';
 
 if ($password !== $confirm) {
     die("Paroles nesakrīt!");
@@ -10,9 +10,11 @@ if ($password !== $confirm) {
 
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO jb_users (email, password) VALUES (?, ?)";
+$role = 'user';
+
+$sql = "INSERT INTO jb_users (email, password, role) VALUES (?, ?, ?)";
 $stmt = $mysqli->prepare($sql);
-$stmt->bind_param("ss", $email, $hashed);
+$stmt->bind_param("sss", $email, $hashed, $role);
 
 if ($stmt->execute()) {
     header("Location: index.php");
