@@ -23,3 +23,14 @@ $stmt->execute();
 header("Location: admin_dashboard.php");
 exit();
 }
+?>
+
+<form method="post">
+
+<input name="location" placeholder="Location"><br>
+<input name="contact" placeholder="Contact"><br>
+<input name="price" placeholder="Price"><br>
+
+<button type="submit">Add Listing</button>
+
+</form>
