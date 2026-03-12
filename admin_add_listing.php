@@ -19,3 +19,7 @@ VALUES (?, ?, ?, ?)
 ");
 $stmt->bind_param("ssii", $location, $contact, $price, $owner);
 $stmt->execute();
+
+header("Location: admin_dashboard.php");
+exit();
+}
