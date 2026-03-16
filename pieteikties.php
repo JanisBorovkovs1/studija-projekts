@@ -37,12 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
 
     $owner_id = $row['owner_id'];
 
+    $check = $mysqli->prepare("
+    SELECT id FROM jb_applications 
+    WHERE listing_id = ? AND applicant_id = ?
+    ");
+
+    $check->bind_param("ii", $listing_id, $applicant_id);
+    $check->execute();
+    $check->store_result();
+
+    if ($check->num_rows > 0) {
+        die("Jūs jau esat pieteicies uz šo sludinājumu.");
+    }
+
     if ($owner_id == 0) {
-    die("Owner not found for this listing.");
+    die("Īpašnieks nav atrasts šim sludinājumam.");
     }
     
     if ($owner_id == $applicant_id) {
-    die("You cannot apply to your own listing.");
+    die("Jūs nevarat iesniegt pieteikumu uz savu sludinājumu.");
     }
 
     // Saglabāt pieteikumu datubāzē
