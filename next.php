@@ -1,6 +1,21 @@
 <?php
 session_start();
 
+$owner_id = $_SESSION['id_users'];
+
+$count_stmt = $conn->prepare("
+SELECT COUNT(*) as total 
+FROM jb_applications 
+WHERE owner_id = ? AND is_read = 0
+");
+
+$count_stmt->bind_param("i", $owner_id);
+$count_stmt->execute();
+$count_result = $count_stmt->get_result();
+$count_row = $count_result->fetch_assoc();
+
+$notification_count = $count_row['total'];
+
 if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
@@ -24,7 +39,9 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
-<a href="notifications.php" class="btn btn-warning">Notifications</a>
+<a href="notifications.php" class="btn btn-warning">
+    Notifications (<?= $notification_count ?>)
+</a>
 <?php if ($_SESSION['role'] === 'admin'): ?>
 <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
 <?php endif; ?>
