@@ -3,6 +3,15 @@ session_start();
 
 $owner_id = $_SESSION['id_users'];
 
+if (!isset($_SESSION['id_users'])) {
+    header("Location: index.php");
+    exit();
+}
+# Savienot ar datubāzi
+$conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
+# Iegūst lietotāja ID
+$owner_id = $_SESSION['id_users'];
+# Skaitīt neizlasītos pieteikumus
 $count_stmt = $conn->prepare("
 SELECT COUNT(*) as total 
 FROM jb_applications 
@@ -16,16 +25,9 @@ $count_row = $count_result->fetch_assoc();
 
 $notification_count = $count_row['total'];
 
-if (!isset($_SESSION['id_users'])) {
-    header("Location: index.php");
-    exit();
-}
-$conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
+# Iegūt visus sludinājumus
 $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
