@@ -14,6 +14,9 @@ require 'db.php';
 
 $listing_id = $_GET['listing_id'] ?? $_POST['listing_id'] ?? null;
 
+echo "Listing ID received: " . $listing_id;
+exit();
+
 if (!$listing_id) {
     die("Invalid listing.");
 }
@@ -37,6 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
 
     $owner_id = $row['owner_id'];
 
+    if ($owner_id == 0) {
+    die("Owner not found for this listing.");
+    }
+    
     if ($owner_id == $applicant_id) {
     die("You cannot apply to your own listing.");
     }
