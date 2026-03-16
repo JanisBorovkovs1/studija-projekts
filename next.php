@@ -40,7 +40,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
 <a href="notifications.php" class="btn btn-warning">
-    Notifications (<?= $notification_count ?>)
+    Paziņojumi (<?= $notification_count ?>)
 </a>
 <?php if ($_SESSION['role'] === 'admin'): ?>
 <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>

@@ -33,12 +33,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
-<h2>Your Notifications</h2>
+<h2>Jūsu paziņojumi</h2>
 
 <?php while ($row = $result->fetch_assoc()): ?>
     <div>
         <strong><?= htmlspecialchars($row['email']) ?></strong>
-        applied to your listing.
+        pieteicās uz jūsu sludinājumu.
         <br>
         <?= htmlspecialchars($row['created_at']) ?>
         <hr>
