@@ -7,12 +7,6 @@ session_start();
 require 'db.php';
 $owner_id = $_SESSION['id_users'];
 
-$mysqli->prepare("
-UPDATE jb_applications 
-SET is_read = 1 
-WHERE owner_id = ?
-")->bind_param("i", $owner_id)->execute();
-
 if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
