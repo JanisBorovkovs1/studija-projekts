@@ -14,9 +14,6 @@ require 'db.php';
 
 $listing_id = $_GET['listing_id'] ?? $_POST['listing_id'] ?? null;
 
-echo "Listing ID received: " . $listing_id;
-exit();
-
 if (!$listing_id) {
     die("Invalid listing.");
 }
