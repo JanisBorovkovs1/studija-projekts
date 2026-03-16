@@ -20,6 +20,16 @@ if (!isset($_SESSION['id_users'])) {
 
 $owner_id = $_SESSION['id_users'];
 
+# Skaitīt neizlasītos pieteikumus
+$stmt = $mysqli->prepare("
+UPDATE jb_applications 
+SET is_read = 1 
+WHERE owner_id = ?
+");
+
+$stmt->bind_param("i", $owner_id);
+$stmt->execute();
+
 $stmt = $mysqli->prepare("
     SELECT a.*, u.email
     FROM jb_applications a
