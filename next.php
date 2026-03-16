@@ -42,7 +42,13 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
 <a href="notifications.php" class="btn btn-warning">
-    Paziņojumi (<?= $notification_count ?>)
+    🔔 Paziņojumi (<?= $notification_count ?>)
+    <?php if ($notification_count > 0): ?>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            <?= $notification_count ?>
+        </span>
+    <?php endif; ?>
+
 </a>
 <?php if ($_SESSION['role'] === 'admin'): ?>
 <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
