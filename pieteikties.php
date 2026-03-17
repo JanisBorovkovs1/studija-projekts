@@ -19,11 +19,19 @@ if (!$listing_id) {
 }
 
 // Ja forma ir iesniegta
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
     $applicant_id = $_SESSION['id_users'];
+
+    $stmt = $mysqli->prepare("SELECT email FROM jb_users WHERE id_users = ?");
+    $stmt->bind_param("i", $applicant_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    $email = $user['email'];
+
     // Iegūt īpašnieka ID no saraksta
     $stmt = $mysqli->prepare("SELECT owner_id FROM jb_listings WHERE id_listings = ?");
     $stmt->bind_param("i", $listing_id);
@@ -68,7 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
         die("Insert prepare failed: " . $mysqli->error);
     }
 
-    $message = "Email: $email | Phone: $phone";
+    $message = "Email: $email";
+    if (!empty($phone)) {
+        $message .= " | Phone: $phone";
+    }
 
     $stmt->bind_param("iiis", $listing_id, $owner_id, $applicant_id, $message);
     $stmt->execute();
@@ -95,14 +106,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
     <table class="table table-striped table-bordered align-middle">
         <thead class="table-dark">
             <tr>
-                <th>E-pasts</th>
                 <th>Tel. nr.</th>
             </tr>
         </thead>
          <tbody>
             <tr>
-                <td><input type="email" name="email" class="form-control" required></td>
-                <td><input type="number" name="phone" class="form-control" required></td>
+                <td><input type="number" name="phone" class="form-control" placeholder="Telefona numurs (pēc izvēles)"></td>
             </tr>
         </tbody>
     </table>
