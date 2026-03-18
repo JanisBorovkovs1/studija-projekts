@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Europe/Riga');
+
 $mysqli = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
 
 if ($mysqli->connect_error) {

@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Riga');
 session_start();
 
 $owner_id = $_SESSION['id_users'];
