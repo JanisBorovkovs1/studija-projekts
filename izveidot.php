@@ -29,8 +29,6 @@ if (!isset($_SESSION['id_users'])) {
                 <th>Īpašnieka kontaktinformācija</th>
                 <th>Apraksts</th>
                 <th>Cena</th>
-                </th>
-            </tr>
         </thead>
          <tbody>
             <tr>
