@@ -2,14 +2,12 @@
 date_default_timezone_set('Europe/Riga');
 session_start();
 
-$owner_id = $_SESSION['id_users'];
-
 if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
-# Savienot ar datubāzi
 $conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
+$conn->query("SET time_zone = '+02:00'");
 # Iegūst lietotāja ID
 $owner_id = $_SESSION['id_users'];
 # Skaitīt neizlasītos pieteikumus
@@ -42,7 +40,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
-<a href="notifications.php" class="btn btn-warning">
+<a href="notifications.php" class="btn btn-warning position-relative">
     🔔 Paziņojumi (<?= $notification_count ?>)
     <?php if ($notification_count > 0): ?>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
