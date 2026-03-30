@@ -7,9 +7,6 @@ if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
-
-$owner_id = $_SESSION['id_users'];
-
 # Skaitīt neizlasītos pieteikumus
 $stmt = $mysqli->prepare("
 UPDATE jb_applications 
