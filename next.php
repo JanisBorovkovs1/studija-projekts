@@ -14,7 +14,7 @@ $owner_id = $_SESSION['id_users'];
 $count_stmt = $conn->prepare("
 SELECT COUNT(*) as total 
 FROM jb_applications 
-WHERE owner_id = ? AND is_read = 0
+WHERE owner_id = ? AND is_read IS NULL
 ");
 
 $count_stmt->bind_param("i", $owner_id);
