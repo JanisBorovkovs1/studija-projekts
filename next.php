@@ -1,19 +1,21 @@
 <?php
 session_start();
 
+$owner_id = $_SESSION['id_users'];
+
 if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
+# Savienot ar datubāzi
 $conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
-$conn->query("SET time_zone = '+02:00'");
 # Iegūst lietotāja ID
 $owner_id = $_SESSION['id_users'];
 # Skaitīt neizlasītos pieteikumus
 $count_stmt = $conn->prepare("
 SELECT COUNT(*) as total 
 FROM jb_applications 
-WHERE owner_id = ? AND is_read IS NULL
+WHERE owner_id = ? AND is_read = 0
 ");
 
 $count_stmt->bind_param("i", $owner_id);
@@ -39,8 +41,8 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
-<a href="notifications.php" class="btn btn-warning position-relative">
-    🔔 Paziņojumi
+<a href="notifications.php" class="btn btn-warning">
+    🔔 Paziņojumi (<?= $notification_count ?>)
     <?php if ($notification_count > 0): ?>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             <?= $notification_count ?>
@@ -65,7 +67,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
                 <div class="card shadow-sm h-100">
                     
                     <!-- IMAGE -->
-                    <img src="uploads/studio.png" 
+                    <img src="uploads/<?= htmlspecialchars($row['image']) ?>" 
                          class="card-img-top"
                          style="height:200px; object-fit:cover;"
                          alt="Studio image">
@@ -78,9 +80,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
                         <p class="card-text text-muted mb-2">
                             📞 <?= htmlspecialchars($row['contact']) ?>
                         </p>
-                        <p class="card-text">
-                            <?= htmlspecialchars($row['description']) ?>
-                        </p>
+
                         <p class="fw-bold fs-5 mb-3">
                             <?= htmlspecialchars($row['price']) ?> EUR/h
                         </p>
@@ -89,6 +89,12 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
                            class="btn btn-primary mt-auto">
                             Pieteikties
                         </a>
+                        <?php if ($row['owner_id'] == $_SESSION['id_users']): ?>
+                            <form action="delete_listing.php" method="post" onsubmit="return confirm('Vai tiešām dzēst?');">
+                                <input type="hidden" name="id" value="<?= $row['id_listings'] ?>">
+                                <button class="btn btn-danger btn-sm mt-2">Dzēst</button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
