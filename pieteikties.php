@@ -73,10 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Insert prepare failed: " . $mysqli->error);
     }
 
-    $message = "Email: $email";
-    if (!empty($phone)) {
-        $message .= " | Phone: $phone";
-    }
+    $message = !empty($phone) ? $phone : "";
 
     $stmt->bind_param("iiis", $listing_id, $owner_id, $applicant_id, $message);
     $stmt->execute();

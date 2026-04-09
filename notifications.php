@@ -33,20 +33,21 @@ $result = $stmt->get_result();
 <h2>Jūsu paziņojumi</h2>
 
 <?php while ($row = $result->fetch_assoc()): ?>
-    <div class="alert alert-info mt-3 shadow-sm" style="border-radius: 15px;">
-        <div class="d-flex justify-content-between align-items-center">
+    <div class="alert alert-info mt-3 shadow-sm" style="border-radius: 10px; border-left: 5px solid #0d6efd;">
+        <div class="d-flex justify-content-between">
             <strong><?= htmlspecialchars($row['email']) ?></strong>
             <small class="text-muted"><?= htmlspecialchars($row['created_at']) ?></small>
         </div>
-        <p class="mb-0 mt-2">
-            pieteicās uz jūsu sludinājumu.
-        </p>
         
+        <p class="mb-1">Pieteicās uz jūsu sludinājumu.</p>
+
         <?php if (!empty($row['message'])): ?>
-            <div class="mt-2 pt-2 border-top">
-                <span class="badge bg-primary">Kontakti:</span> 
-                <span class="ms-1 text-dark"><?= htmlspecialchars($row['message']) ?></span>
+            <div class="mt-2">
+                <span class="badge bg-dark">Telefons:</span> 
+                <span class="ms-1 fw-bold text-primary"><?= htmlspecialchars($row['message']) ?></span>
             </div>
+        <?php else: ?>
+            <small class="text-muted italic text-decoration-underline">Telefona numurs netika norādīts.</small>
         <?php endif; ?>
     </div>
 <?php endwhile; ?>
