@@ -15,7 +15,7 @@ $owner_id = $_SESSION['id_users'];
 $count_stmt = $conn->prepare("
 SELECT COUNT(*) as total 
 FROM jb_applications 
-WHERE owner_id = ? AND is_read = 0
+WHERE owner_id = ? AND is_read IS NULL
 ");
 
 $count_stmt->bind_param("i", $owner_id);
@@ -42,7 +42,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
 <a href="notifications.php" class="btn btn-warning">
-    🔔 Paziņojumi (<?= $notification_count ?>)
+    🔔 Paziņojumi
     <?php if ($notification_count > 0): ?>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             <?= $notification_count ?>
