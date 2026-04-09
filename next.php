@@ -7,6 +7,14 @@ if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
+if (isset($_GET['get_count'])) {
+    $stmt = $mysqli->prepare("SELECT COUNT(*) as total FROM jb_applications WHERE owner_id = ? AND is_read IS NULL");
+    $stmt->bind_param("i", $owner_id);
+    $stmt->execute();
+    $res = $stmt->get_result()->fetch_assoc();
+    echo $res['total'];
+    exit();
+}
 # Savienot ar datubāzi
 $conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
 # Iegūst lietotāja ID
@@ -80,7 +88,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
                         <p class="card-text text-muted mb-2">
                             📞 <?= htmlspecialchars($row['contact']) ?>
                         </p>
-                        
+
                         <p class="card-text">
                             <?= htmlspecialchars($row['description']) ?>
                         </p>
