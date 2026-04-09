@@ -13,7 +13,7 @@ $conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg")
 $owner_id = $_SESSION['id_users'];
 
 if (isset($_GET['get_count'])) {
-    $stmt = $mysqli->prepare("SELECT COUNT(*) as total FROM jb_applications WHERE owner_id = ? AND is_read IS NULL");
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM jb_applications WHERE owner_id = ? AND is_read IS NULL");
     $stmt->bind_param("i", $owner_id);
     $stmt->execute();
     $res = $stmt->get_result()->fetch_assoc();
@@ -51,14 +51,13 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
 <body class="p-4 bg-light">
 <a href="logout.php" class="btn btn-danger">Logout</a>
-<a href="notifications.php" class="btn btn-warning">
+<a href="notifications.php" class="btn btn-outline-primary position-relative">
     🔔 Paziņojumi
-    <?php if ($notification_count > 0): ?>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            <?= $notification_count ?>
-        </span>
-    <?php endif; ?>
-
+    <span id="notifBadge" 
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+            style="display: <?= ($notification_count > 0) ? 'inline-block' : 'none'; ?> !important; visibility: visible !important; opacity: 1 !important;">
+        <span id="notifCount"><?= $notification_count ?></span>
+    </span>
 </a>
 <?php if ($_SESSION['role'] === 'admin'): ?>
 <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
@@ -116,6 +115,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
     </div>
 </div>
 
+<script src="main.js"></script>
 <?php $conn->close(); ?>
 
 </body>

@@ -1,30 +1,26 @@
 function updateNotifications() {
-    // Pieprasām datus no next.php
     fetch('?get_count=1')
     .then(response => response.text())
     .then(countText => {
-        // 1. Notīrām atstarpes un pārvēršam tekstu par skaitli
         let count = parseInt(countText.trim());
-
-        // Atrodam elementus
         let badge = document.getElementById('notifBadge');
         let countDisplay = document.getElementById('notifCount');
 
-        // 2. Ja izdevās iegūt skaitli un tas ir lielāks par 0
         if (!isNaN(count) && count > 0) {
-            badge.style.display = 'inline-block'; // Parādām badge
+            // Parādām badge un ierakstām skaitli
+            badge.style.setProperty('display', 'inline-block', 'important');
+            badge.style.setProperty('visibility', 'visible', 'important');
+            badge.style.setProperty('opacity', '1', 'important');
+            
             if (countDisplay) countDisplay.innerText = count;
-            badge.innerText = count;
         } else {
-            // Ja paziņojumu nav (0) vai radās kļūda, paslēpjam
-            badge.style.display = 'none';
+            // Paslēpjam, ja paziņojumu tiešām nav
+            badge.style.setProperty('display', 'none', 'important');
         }
     })
-    .catch(error => console.error('Kļūda ielādējot paziņojumus:', error));
+    .catch(err => console.error('Kļūda:', err));
 }
 
-// Pārbaudām ik pēc 5 sekundēm
+// Pārbaude ik pēc 5 sekundēm
 setInterval(updateNotifications, 5000);
-
-// Izsaucam arī uzreiz ielādējot lapu
 updateNotifications();
