@@ -50,21 +50,28 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 </head>
 
 <body class="p-4 bg-light">
-<a href="logout.php" class="btn btn-danger">Logout</a>
-<a href="notifications.php" class="btn btn-outline-primary position-relative">
-    🔔 Paziņojumi
-    <span id="notifBadge" 
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
-            style="display: <?= ($notification_count > 0) ? 'inline-block' : 'none'; ?> !important; visibility: visible !important; opacity: 1 !important;">
-        <span id="notifCount"><?= $notification_count ?></span>
-    </span>
-</a>
-<?php if ($_SESSION['role'] === 'admin'): ?>
-<a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
-<?php endif; ?>
-<div class="container fade-in">
+<div class="container mb-4 fade-in">
     <div class="d-flex gap-2 justify-content-end flex-wrap">
-        <h2 class="fw-bold">Studiju īres piedāvājumi</h2>
+        <a href="notifications.php" class="btn btn-outline-primary position-relative">
+            🔔 Paziņojumi
+            <span id="notifBadge" 
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+                  style="display: <?= ($notification_count > 0) ? 'inline-block' : 'none'; ?> !important; visibility: visible !important; opacity: 1 !important;">
+                <span id="notifCount"><?= $notification_count ?></span>
+            </span>
+        </a>
+        
+        <?php if ($_SESSION['role'] === 'admin'): ?>
+            <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
+        <?php endif; ?>
+
+        <a href="logout.php" class="btn btn-danger">Logout</a>
+    </div>
+</div>
+
+<div class="container fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <h2 class="fw-bold mb-0">Studiju īres piedāvājumi</h2>
         <a href="izveidot.php" class="btn btn-success">
             + Izveidot savu
         </a>
