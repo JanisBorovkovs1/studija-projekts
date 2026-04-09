@@ -33,11 +33,11 @@ $result = $stmt->get_result();
 <h2>Jūsu paziņojumi</h2>
 
 <?php while ($row = $result->fetch_assoc()): ?>
-    <div>
-        <strong><?= htmlspecialchars($row['email']) ?></strong>
-        pieteicās uz jūsu sludinājumu.
+    <div class="alert alert-info mt-3">
+        <strong><?= htmlspecialchars($row['email']) ?></strong> pieteicās uz jūsu sludinājumu.
         <br>
-        <?= htmlspecialchars($row['created_at']) ?>
-        <hr>
+        <small class="text-muted"><?= htmlspecialchars($row['created_at']) ?></small>
+        <br>
+        <span class="fw-bold">Kontaktinformācija:</span> <?= htmlspecialchars($row['message']) ?>
     </div>
 <?php endwhile; ?>

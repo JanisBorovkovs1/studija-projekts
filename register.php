@@ -12,7 +12,8 @@ $hashed = password_hash($password, PASSWORD_DEFAULT);
 
 $role = 'user';
 
-$sql = "INSERT INTO jb_users (email, password, role) VALUES (?, ?, ?)";
+// Pievienojam 'created' kolonnu un NOW() funkciju
+$sql = "INSERT INTO jb_users (email, password, role, created) VALUES (?, ?, ?, NOW())";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("sss", $email, $hashed, $role);
 
