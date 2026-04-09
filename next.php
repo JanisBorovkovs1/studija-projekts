@@ -67,7 +67,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
                 <div class="card shadow-sm h-100">
                     
                     <!-- IMAGE -->
-                    <img src="uploads/<?= htmlspecialchars($row['image']) ?>" 
+                    <img src="uploads/studio.png" 
                          class="card-img-top"
                          style="height:200px; object-fit:cover;"
                          alt="Studio image">
@@ -79,6 +79,10 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
                         <p class="card-text text-muted mb-2">
                             📞 <?= htmlspecialchars($row['contact']) ?>
+                        </p>
+                        
+                        <p class="card-text">
+                            <?= htmlspecialchars($row['description']) ?>
                         </p>
 
                         <p class="fw-bold fs-5 mb-3">
