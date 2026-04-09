@@ -63,7 +63,7 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
 <?php endif; ?>
 <div class="container fade-in">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex gap-2 justify-content-end flex-wrap">
         <h2 class="fw-bold">Studiju īres piedāvājumi</h2>
         <a href="izveidot.php" class="btn btn-success">
             + Izveidot savu

@@ -20,7 +20,7 @@ if (!isset($_SESSION['id_users'])) {
 
 <body class="p-4 bg-light">
 
-<div class="container">
+<div class="table-responsive">
     <form action="save_listing.php" method="post">
     <table class="table table-striped table-bordered align-middle">
         <thead class="table-dark">

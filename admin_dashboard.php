@@ -28,41 +28,43 @@ $result = $mysqli->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 <a href="next.php" class="btn btn-secondary mb-3">Back</a>
 <a href="admin_add_listing.php" class="btn btn-success mb-3">Add Listing</a>
 
-<table class="table table-bordered">
+<div class="table-responsive">
+    <table class="table table-striped table-bordered align-middle">
 
-<tr>
-<th>ID</th>
-<th>Location</th>
-<th>Contact</th>
-<th>Price</th>
-<th>Actions</th>
-</tr>
 
-<?php while ($row = $result->fetch_assoc()): ?>
+    <tr>
+    <th>ID</th>
+    <th>Location</th>
+    <th>Contact</th>
+    <th>Price</th>
+    <th>Actions</th>
+    </tr>
 
-<tr>
-<td><?= $row['id_listings'] ?></td>
-<td><?= htmlspecialchars($row['location']) ?></td>
-<td><?= htmlspecialchars($row['contact']) ?></td>
-<td><?= $row['price'] ?></td>
+    <?php while ($row = $result->fetch_assoc()): ?>
 
-<td>
-<a class="btn btn-warning btn-sm"
-href="admin_edit_listing.php?id=<?= $row['id_listings'] ?>">
-Edit
-</a>
+    <tr>
+    <td><?= $row['id_listings'] ?></td>
+    <td><?= htmlspecialchars($row['location']) ?></td>
+    <td><?= htmlspecialchars($row['contact']) ?></td>
+    <td><?= $row['price'] ?></td>
 
-<a class="btn btn-danger btn-sm"
-href="admin_delete_listing.php?id=<?= $row['id_listings'] ?>">
-Delete
-</a>
-</td>
+    <td>
+    <a class="btn btn-warning btn-sm"
+    href="admin_edit_listing.php?id=<?= $row['id_listings'] ?>">
+    Edit
+    </a>
 
-</tr>
+    <a class="btn btn-danger btn-sm"
+    href="admin_delete_listing.php?id=<?= $row['id_listings'] ?>">
+    Delete
+    </a>
+    </td>
+
+    </tr>
 
 <?php endwhile; ?>
 
-</table>
-
+    </table>
+</div>
 </body>
 </html>
