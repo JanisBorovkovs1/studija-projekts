@@ -7,6 +7,11 @@ if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
+# Savienot ar datubāzi
+$conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
+# Iegūst lietotāja ID
+$owner_id = $_SESSION['id_users'];
+
 if (isset($_GET['get_count'])) {
     $stmt = $mysqli->prepare("SELECT COUNT(*) as total FROM jb_applications WHERE owner_id = ? AND is_read IS NULL");
     $stmt->bind_param("i", $owner_id);
@@ -15,10 +20,7 @@ if (isset($_GET['get_count'])) {
     echo $res['total'];
     exit();
 }
-# Savienot ar datubāzi
-$conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
-# Iegūst lietotāja ID
-$owner_id = $_SESSION['id_users'];
+
 # Skaitīt neizlasītos pieteikumus
 $count_stmt = $conn->prepare("
 SELECT COUNT(*) as total 
