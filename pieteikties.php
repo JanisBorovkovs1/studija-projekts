@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body class="p-4 bg-light">
-
+<a href="next.php" class="btn btn-secondary mb-3">Atpakaļ</a>
 <div class="container">
     <form method="post">
         <input type="hidden" name="listing_id" value="<?php echo $listing_id; ?>">

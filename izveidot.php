@@ -20,6 +20,7 @@ if (!isset($_SESSION['id_users'])) {
 
 <body class="p-4 bg-light">
 
+<a href="next.php" class="btn btn-secondary mb-3">Atpakaļ</a>
 <div class="table-responsive">
     <form action="save_listing.php" method="post">
     <table class="table table-striped table-bordered align-middle">

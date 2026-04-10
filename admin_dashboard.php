@@ -25,8 +25,8 @@ $result = $mysqli->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
 <h2>Admin Dashboard</h2>
 
-<a href="next.php" class="btn btn-secondary mb-3">Back</a>
-<a href="admin_add_listing.php" class="btn btn-success mb-3">Add Listing</a>
+<a href="next.php" class="btn btn-secondary mb-3">Atpakaļ</a>
+<a href="admin_add_listing.php" class="btn btn-success mb-3">Pievienot sludinājumu</a>
 
 <div class="table-responsive">
     <table class="table table-striped table-bordered align-middle">
