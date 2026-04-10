@@ -64,7 +64,9 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
         <?php if ($_SESSION['role'] === 'admin'): ?>
             <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
         <?php endif; ?>
-
+        <a href="my_applications.php" class="btn btn-outline-info">
+            📄 Mani pieteikumi
+        </a>
         <a href="logout.php" class="btn btn-danger">Logout</a>
     </div>
 </div>
