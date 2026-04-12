@@ -10,3 +10,11 @@ if ($mysqli->connect_error) {
 }
 
 $mysqli->set_charset("utf8mb4");
+
+// Funkcija, lai viegli saglabātu darbības arhīvā
+function logActivity($mysqli, $user_id, $action_type, $details) {
+    $stmt = $mysqli->prepare("INSERT INTO jb_activity_log (user_id, action_type, details) VALUES (?, ?, ?)");
+    $stmt->bind_param("iss", $user_id, $action_type, $details);
+    $stmt->execute();
+}
+?>

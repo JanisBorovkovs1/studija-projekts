@@ -12,10 +12,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $applicant_id = $_SESSION['id_users'];
 
     if ($app_id) {
-        // Dzēšam TIKAI tad, ja pieteikums pieder šim lietotājam
-        $stmt = $mysqli->prepare("DELETE FROM jb_applications WHERE id = ? AND applicant_id = ?");
-        $stmt->bind_param("ii", $app_id, $applicant_id);
-        $stmt->execute();
+        // 1. Iegūstam informāciju PAR pieteikumu, lai to varētu saglabāt arhīvā
+        $info_stmt = $mysqli->prepare("SELECT message, listing_id FROM jb_applications WHERE id = ? AND applicant_id = ?");
+        $info_stmt->bind_param("ii", $app_id, $applicant_id);
+        $info_stmt->execute();
+        $info_result = $info_stmt->get_result();
+        
+        if ($info = $info_result->fetch_assoc()) {
+            $msg = $info['message'];
+            $lst_id = $info['listing_id'];
+            
+            // 2. Ierakstām arhīvā, KAS tika izdzēsts
+            $details = "Atcelts pieteikums uz sludinājumu ID: $lst_id. Atstātā ziņa pirms dzēšanas: '$msg'";
+            logActivity($mysqli, $applicant_id, 'Atcelts pieteikums', $details);
+
+            // 3. Dzēšam ārā pašu pieteikumu
+            $stmt = $mysqli->prepare("DELETE FROM jb_applications WHERE id = ? AND applicant_id = ?");
+            $stmt->bind_param("ii", $app_id, $applicant_id);
+            $stmt->execute();
+        }
     }
 }
 

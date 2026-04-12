@@ -22,5 +22,10 @@ CREATE TABLE jb_applications (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_read TINYINT DEFAULT 0
 );
-ALTER TABLE jb_applications 
-MODIFY is_read TINYINT(1) NOT NULL DEFAULT 0;
+CREATE TABLE jb_activity_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    action_type VARCHAR(50) NOT NULL,
+    details TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
