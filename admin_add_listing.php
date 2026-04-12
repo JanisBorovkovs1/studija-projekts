@@ -18,8 +18,13 @@ INSERT INTO jb_listings (location, contact, price, owner_id)
 VALUES (?, ?, ?, ?)
 ");
 $stmt->bind_param("ssii", $location, $contact, $price, $owner);
-$stmt->execute();
-
+if ($stmt->execute()) {
+    logActivity($mysqli, $_SESSION['id_users'], 'Pievienots sludinājums', "Adminis pievienoja jaunu vietu: " . $_POST['location']);
+    
+    header("Location: admin_dashboard.php");
+} else {
+    echo "Error: " . $stmt->error;
+}
 header("Location: admin_dashboard.php");
 exit();
 }
