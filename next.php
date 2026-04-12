@@ -1,16 +1,14 @@
 <?php
 session_start();
 
-$owner_id = $_SESSION['id_users'];
-
 if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
-# Savienot ar datubāzi
-$conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
 # Iegūst lietotāja ID
 $owner_id = $_SESSION['id_users'];
+# Savienot ar datubāzi
+$conn = new mysqli("localhost", "u547027111_mvg", "MVGskola1", "u547027111_mvg");
 
 if (isset($_GET['get_count'])) {
     $stmt = $conn->prepare("SELECT COUNT(*) as total FROM jb_applications WHERE owner_id = ? AND is_read IS NULL");
@@ -50,7 +48,7 @@ if ($sort === 'price_asc') {
 }
 
 $result = $conn->query("SELECT * FROM jb_listings $order_by");
-
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

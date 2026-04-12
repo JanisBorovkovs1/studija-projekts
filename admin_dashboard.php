@@ -21,7 +21,7 @@ elseif ($sort === 'location_asc') $order_by = "ORDER BY location ASC";
 elseif ($sort === 'location_desc') $order_by = "ORDER BY location DESC";
 
 $result = $mysqli->query("SELECT * FROM jb_listings $order_by");
-
+?>
 <!DOCTYPE html>
 <html>
 <head>
