@@ -74,6 +74,10 @@ $result = $conn->query("SELECT * FROM jb_listings $order_by");
         <?php if ($_SESSION['role'] === 'admin'): ?>
             <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
         <?php endif; ?>
+        <?php if ($_SESSION['role'] === 'admin'): ?>
+            <a href="admin_dashboard.php" class="btn btn-dark">Admin Panel</a>
+            <a href="archive.php" class="btn btn-outline-dark">📜 Arhīvs</a>
+        <?php endif; ?>
         <a href="my_applications.php" class="btn btn-outline-info">
             📄 Mani pieteikumi
         </a>
