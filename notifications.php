@@ -1,12 +1,13 @@
 <?php
 session_start();
 require 'db.php';
-$owner_id = $_SESSION['id_users'];
 
 if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
+
+$owner_id = $_SESSION['id_users'];
 
 # Atzīmēt visus pieteikumus kā izlasītus
 $stmt = $mysqli->prepare("
@@ -19,7 +20,7 @@ $stmt->execute();
 
 # Kārtošana
 $sort = $_GET['sort'] ?? 'newest';
-$order_by = "ORDER BY a.created_at DESC"; // Jaunākie vispirms
+$order_by = "ORDER BY a.created_at DESC"; // Noklusētais
 
 if ($sort === 'oldest') {
     $order_by = "ORDER BY a.created_at ASC";
@@ -35,7 +36,7 @@ $stmt = $mysqli->prepare("
     FROM jb_applications a
     JOIN jb_users u ON a.applicant_id = u.id_users
     WHERE a.owner_id = ?
-    ORDER BY a.created_at DESC
+    $order_by
 ");
 $stmt->bind_param("i", $owner_id);
 $stmt->execute();
@@ -56,13 +57,6 @@ $result = $stmt->get_result();
 
 <div class="container fade-in" style="max-width: 800px;">
     
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold mb-0">Jūsu paziņojumi</h2>
-        <a href="next.php" class="btn btn-outline-secondary">
-            ⬅ Atpakaļ
-        </a>
-    </div>
-
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <h2 class="fw-bold mb-0">Jūsu paziņojumi</h2>
         

@@ -27,7 +27,7 @@ $stmt = $mysqli->prepare("
     FROM jb_applications a
     JOIN jb_listings l ON a.listing_id = l.id_listings
     WHERE a.applicant_id = ?
-    ORDER BY a.created_at DESC
+    $order_by
 ");
 $stmt->bind_param("i", $applicant_id);
 $stmt->execute();

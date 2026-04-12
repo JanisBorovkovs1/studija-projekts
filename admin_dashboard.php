@@ -42,10 +42,13 @@ $result = $mysqli->query("SELECT * FROM jb_listings $order_by");
     <form method="GET" class="d-flex align-items-center gap-2">
         <label class="fw-bold text-nowrap">Sort by:</label>
         <select name="sort" class="form-select" onchange="this.form.submit()">
-            <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Newest</option>
-            <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Price (Low to High)</option>
-            <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Price (High to Low)</option>
-            <option value="location_asc" <?= $sort === 'location_asc' ? 'selected' : '' ?>>Location (A-Z)</option>
+            <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Jaunākie</option>
+            <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Lētākie vispirms</option>
+            <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Dārgākie vispirms</option>
+            <option value="location_asc" <?= $sort === 'location_asc' ? 'selected' : '' ?>>Atrašanās vieta (A-Z)</option>
+            <option value="location_desc" <?= $sort === 'location_desc' ? 'selected' : '' ?>>Atrašanās vieta (Z-A)</option>
+            </select>
+        </form>
         </select>
     </form>
 </div>
