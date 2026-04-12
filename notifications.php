@@ -17,6 +17,18 @@ WHERE owner_id = ?
 $stmt->bind_param("i", $owner_id);
 $stmt->execute();
 
+# Kārtošana
+$sort = $_GET['sort'] ?? 'newest';
+$order_by = "ORDER BY a.created_at DESC"; // Jaunākie vispirms
+
+if ($sort === 'oldest') {
+    $order_by = "ORDER BY a.created_at ASC";
+} elseif ($sort === 'email_asc') {
+    $order_by = "ORDER BY u.email ASC";
+} elseif ($sort === 'email_desc') {
+    $order_by = "ORDER BY u.email DESC";
+}
+
 # Iegūt visus paziņojumus
 $stmt = $mysqli->prepare("
     SELECT a.*, u.email
@@ -49,6 +61,22 @@ $result = $stmt->get_result();
         <a href="next.php" class="btn btn-outline-secondary">
             ⬅ Atpakaļ
         </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <h2 class="fw-bold mb-0">Jūsu paziņojumi</h2>
+        
+        <div class="d-flex gap-3 align-items-center">
+            <form method="GET" class="m-0">
+                <select name="sort" class="form-select form-select-sm shadow-sm" onchange="this.form.submit()">
+                    <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Jaunākie</option>
+                    <option value="oldest" <?= $sort === 'oldest' ? 'selected' : '' ?>>Vecākie</option>
+                    <option value="email_asc" <?= $sort === 'email_asc' ? 'selected' : '' ?>>E-pasts (A-Z)</option>
+                    <option value="email_desc" <?= $sort === 'email_desc' ? 'selected' : '' ?>>E-pasts (Z-A)</option>
+                </select>
+            </form>
+            <a href="next.php" class="btn btn-outline-secondary">⬅ Atpakaļ</a>
+        </div>
     </div>
 
     <div class="list-group shadow-sm">

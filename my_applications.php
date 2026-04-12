@@ -9,6 +9,18 @@ if (!isset($_SESSION['id_users'])) {
 
 $applicant_id = $_SESSION['id_users'];
 
+# Kārtošana
+$sort = $_GET['sort'] ?? 'newest';
+$order_by = "ORDER BY a.created_at DESC"; 
+
+if ($sort === 'oldest') {
+    $order_by = "ORDER BY a.created_at ASC";
+} elseif ($sort === 'location_asc') {
+    $order_by = "ORDER BY l.location ASC";
+} elseif ($sort === 'location_desc') {
+    $order_by = "ORDER BY l.location DESC";
+}
+
 # Iegūt lietotāja pieteikumus kopā ar sludinājuma informāciju
 $stmt = $mysqli->prepare("
     SELECT a.id as app_id, a.message, a.created_at, a.is_read, l.location, l.price 
@@ -35,9 +47,20 @@ $result = $stmt->get_result();
 
 <div class="container fade-in" style="max-width: 800px;">
     
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <h2 class="fw-bold mb-0">Mani pieteikumi</h2>
-        <a href="next.php" class="btn btn-outline-secondary">⬅ Atpakaļ</a>
+        
+        <div class="d-flex gap-3 align-items-center">
+            <form method="GET" class="m-0">
+                <select name="sort" class="form-select form-select-sm shadow-sm" onchange="this.form.submit()">
+                    <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Jaunākie</option>
+                    <option value="oldest" <?= $sort === 'oldest' ? 'selected' : '' ?>>Vecākie</option>
+                    <option value="location_asc" <?= $sort === 'location_asc' ? 'selected' : '' ?>>Vieta (A-Z)</option>
+                    <option value="location_desc" <?= $sort === 'location_desc' ? 'selected' : '' ?>>Vieta (Z-A)</option>
+                </select>
+            </form>
+            <a href="next.php" class="btn btn-outline-secondary">⬅ Atpakaļ</a>
+        </div>
     </div>
 
     <div class="list-group shadow-sm">

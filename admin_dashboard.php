@@ -11,8 +11,16 @@ if ($_SESSION['role'] !== 'admin') {
     die("Access denied.");
 }
 
-$result = $mysqli->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
-?>
+# Kārtošana
+$sort = $_GET['sort'] ?? 'newest';
+$order_by = "ORDER BY created_at DESC"; 
+
+if ($sort === 'price_asc') $order_by = "ORDER BY price ASC";
+elseif ($sort === 'price_desc') $order_by = "ORDER BY price DESC";
+elseif ($sort === 'location_asc') $order_by = "ORDER BY location ASC";
+elseif ($sort === 'location_desc') $order_by = "ORDER BY location DESC";
+
+$result = $mysqli->query("SELECT * FROM jb_listings $order_by");
 
 <!DOCTYPE html>
 <html>
@@ -25,8 +33,22 @@ $result = $mysqli->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
 
 <h2>Admin Dashboard</h2>
 
-<a href="next.php" class="btn btn-secondary mb-3">Atpakaļ</a>
-<a href="admin_add_listing.php" class="btn btn-success mb-3">Pievienot sludinājumu</a>
+<div class="d-flex justify-content-between mb-3 align-items-end flex-wrap gap-3">
+    <div>
+        <a href="next.php" class="btn btn-secondary">Atpakaļ</a>
+        <a href="admin_add_listing.php" class="btn btn-success">Pievienot sludinājumu</a>
+    </div>
+
+    <form method="GET" class="d-flex align-items-center gap-2">
+        <label class="fw-bold text-nowrap">Sort by:</label>
+        <select name="sort" class="form-select" onchange="this.form.submit()">
+            <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Newest</option>
+            <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Price (Low to High)</option>
+            <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Price (High to Low)</option>
+            <option value="location_asc" <?= $sort === 'location_asc' ? 'selected' : '' ?>>Location (A-Z)</option>
+        </select>
+    </form>
+</div>
 
 <div class="table-responsive">
     <table class="table table-striped table-bordered align-middle">

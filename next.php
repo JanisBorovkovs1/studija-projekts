@@ -35,9 +35,21 @@ $count_row = $count_result->fetch_assoc();
 
 $notification_count = $count_row['total'];
 
-# Iegūt visus sludinājumus
-$result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
-?>
+# Kārtošana
+$sort = $_GET['sort'] ?? 'newest';
+$order_by = "ORDER BY created_at DESC"; // Noklusētais (jaunākie)
+
+if ($sort === 'price_asc') {
+    $order_by = "ORDER BY price ASC";
+} elseif ($sort === 'price_desc') {
+    $order_by = "ORDER BY price DESC";
+} elseif ($sort === 'location_asc') {
+    $order_by = "ORDER BY location ASC";
+} elseif ($sort === 'location_desc') {
+    $order_by = "ORDER BY location DESC";
+}
+
+$result = $conn->query("SELECT * FROM jb_listings $order_by");
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,12 +83,22 @@ $result = $conn->query("SELECT * FROM jb_listings ORDER BY created_at DESC");
     </div>
 </div>
 
-<div class="container fade-in">
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <h2 class="fw-bold mb-0">Studiju īres piedāvājumi</h2>
-        <a href="izveidot.php" class="btn btn-success">
-            + Izveidot savu
-        </a>
+        
+        <div class="d-flex gap-3 align-items-center">
+            <form method="GET" class="m-0">
+                <select name="sort" class="form-select form-select-sm shadow-sm" onchange="this.form.submit()">
+                    <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Jaunākie vispirms</option>
+                    <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Lētākie vispirms</option>
+                    <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Dārgākie vispirms</option>
+                    <option value="location_asc" <?= $sort === 'location_asc' ? 'selected' : '' ?>>Vieta (A-Z)</option>
+                    <option value="location_desc" <?= $sort === 'location_desc' ? 'selected' : '' ?>>Vieta (Z-A)</option>
+                </select>
+            </form>
+            
+            <a href="izveidot.php" class="btn btn-success">+ Izveidot savu</a>
+        </div>
     </div>
 
     <div class="row g-4">
