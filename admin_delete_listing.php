@@ -2,12 +2,12 @@
 session_start();
 require 'db.php';
 
-$id = $_GET['id'] ?? null;
-$admin_id = $_SESSION['id_users'];
-
 if ($_SESSION['role'] !== 'admin') {
     die("Access denied.");
 }
+
+$id = $_GET['id'] ?? null;
+$admin_id = $_SESSION['id_users'];
 
 if ($id) {
     // 1. SOLIS: Iegūstam informāciju par sludinājumu PIRMS tā dzēšanas

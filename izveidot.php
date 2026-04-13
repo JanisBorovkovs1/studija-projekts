@@ -9,41 +9,42 @@ if (!isset($_SESSION['id_users'])) {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Īre</title>
+    <title>Pievienot sludinājumu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
 </head>
-
-<body class="p-4 bg-light">
-
-<a href="next.php" class="btn btn-secondary mb-3">Atpakaļ</a>
-<div class="table-responsive">
-    <form action="save_listing.php" method="post">
-    <table class="table table-striped table-bordered align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Atrašanās vieta</th>
-                <th>Īpašnieka kontaktinformācija</th>
-                <th>Apraksts</th>
-                <th>Cena</th>
-        </thead>
-         <tbody>
-            <tr>
-                <td><input type="text" name="location" class="form-control" required></td>
-                <td><input type="email" name="contact" class="form-control" required></td>
-                <td><input type="text" name="description" class="form-control" required></td>
-                <td><input type="number" name="price" step="0.01" class="form-control" required></td>
-            </tr>
-        </tbody>
-    </table>
-     <button type="submit" class="btn btn-success">Iesniegt</button>
-    </form>
-
-</div>
-
+<body class="bg-light p-5">
+    <div class="container" style="max-width: 600px;">
+        <form action="save_listing.php" method="post">
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+                <h3 class="card-title fw-bold mb-4">Pievienot jaunu sludinājumu</h3>
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Atrašanās vieta</label>
+                        <input name="location" class="form-control" placeholder="Piemēram, Rīga, Centrs" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Kontakti</label>
+                        <input name="contact" class="form-control" placeholder="E-pasts vai tel. nr." required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Cena (EUR)</label>
+                        <input type="number" step="0.01" name="price" class="form-control" placeholder="0.00" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Apraksts</label>
+                        <textarea name="description" class="form-control" rows="4" placeholder="Telpas apraksts..."></textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary w-100">Pievienot</button>
+                        <a href="admin_dashboard.php" class="btn btn-outline-secondary w-100">Atpakaļ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
