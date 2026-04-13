@@ -68,6 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     INSERT INTO jb_applications (listing_id, owner_id, applicant_id, message)
     VALUES (?, ?, ?, ?)
     ");
+    
+    logActivity($mysqli, $_SESSION['id_users'], 'Jauns pieteikums', "Lietotājs pieteicās sludinājumam ID: $listing_id");
 
     if (!$stmt) {
         die("Insert prepare failed: " . $mysqli->error);

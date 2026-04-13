@@ -26,6 +26,9 @@ if ($row['owner_id'] != $user_id) {
     die("Jums nav tiesību dzēst šo sludinājumu.");
 }
 
+$loc_name = $row['location'];
+logActivity($mysqli, $user_id, 'Dzēsts sludinājums', "Lietotājs izdzēsa savu sludinājumu: $loc_name (ID: $id)");
+
 // Izdzēst sludinājumu
 $stmt = $mysqli->prepare("DELETE FROM jb_listings WHERE id_listings = ?");
 $stmt->bind_param("i", $id);
@@ -33,3 +36,4 @@ $stmt->execute();
 
 header("Location: next.php");
 exit();
+?>
