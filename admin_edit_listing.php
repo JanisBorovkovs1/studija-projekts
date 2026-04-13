@@ -27,10 +27,13 @@ WHERE id_listings=?
 ");
 
 $stmt->bind_param("ssii",$location,$contact,$price,$id);
-$stmt->execute();
+if ($stmt->execute()) {
+        // Tagad arhīvā būs redzams: "Izmainīts sludinājums (ID: 15) - Jaunā vieta: Rīga"
+        logActivity($mysqli, $_SESSION['id_users'], 'Rediģēts sludinājums', "Adminis izmainīja sludinājumu (ID: $id). Jaunā vieta: $location, jaunā cena: $price, jaunais kontakts: $contact");
 
-header("Location: admin_dashboard.php");
-exit();
+        header("Location: admin_dashboard.php");
+        exit();
+    }
 }
 ?>
 
