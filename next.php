@@ -99,7 +99,13 @@ $result = $conn->query("SELECT * FROM jb_listings $order_by");
             <a href="izveidot.php" class="btn btn-success">+ Izveidot savu</a>
         </div>
     </div>
-
+    <?php if (isset($_SESSION['success_msg'])): ?>
+        <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+            <?= $_SESSION['success_msg']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php unset($_SESSION['success_msg']); ?>
+    <?php endif; ?>
     <div class="row g-4">
         <?php while ($row = $result->fetch_assoc()): ?>
             <div class="col-md-6 col-lg-4">
@@ -158,6 +164,7 @@ $result = $conn->query("SELECT * FROM jb_listings $order_by");
 </div>
 
 <script src="main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <?php $conn->close(); ?>
 
 </body>

@@ -1,33 +1,31 @@
 <?php
+// Ieslēdzam kļūdu paziņojumus, lai redzētu, kas nobruka (ja nobruks)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 date_default_timezone_set('Europe/Riga');
 session_start();
 
+require 'db.php';
+
+// Pārbauda, vai ir ielogojies
 if (!isset($_SESSION['id_users'])) {
     header("Location: index.php");
     exit();
 }
 
-require 'db.php';
-
 $listing_id = $_GET['listing_id'] ?? $_POST['listing_id'] ?? null;
 
 if (!$listing_id) {
-    die("Invalid listing.");
+    die("Kļūda: Sludinājuma ID nav norādīts.");
 }
 
 // Ja forma ir iesniegta
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $phone = trim($_POST['phone']);
+    $phone = trim($_POST['phone'] ?? '');
     $applicant_id = $_SESSION['id_users'];
-
-    $stmt = $mysqli->prepare("SELECT email FROM jb_users WHERE id_users = ?");
-    $stmt->bind_param("i", $applicant_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    $email = $user['email'];
 
     // Iegūt īpašnieka ID no saraksta
     $stmt = $mysqli->prepare("SELECT owner_id FROM jb_listings WHERE id_listings = ?");
@@ -37,16 +35,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $row = $result->fetch_assoc();
 
     if (!$row) {
-        die("Listing not found.");
+        die("Kļūda: Sludinājums nav atrasts datubāzē.");
     }
 
     $owner_id = $row['owner_id'];
 
-    $check = $mysqli->prepare("
-    SELECT id FROM jb_applications 
-    WHERE listing_id = ? AND applicant_id = ?
-    ");
+    if ($owner_id == 0) {
+        die("Kļūda: Īpašnieks nav atrasts šim sludinājumam.");
+    }
+    
+    if ($owner_id == $applicant_id) {
+        die("Jūs nevarat iesniegt pieteikumu uz savu sludinājumu.");
+    }
 
+    // Pārbauda, vai jau nav pieteicies
+    $check = $mysqli->prepare("SELECT id FROM jb_applications WHERE listing_id = ? AND applicant_id = ?");
     $check->bind_param("ii", $listing_id, $applicant_id);
     $check->execute();
     $check->store_result();
@@ -54,66 +57,74 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($check->num_rows > 0) {
         die("Jūs jau esat pieteicies uz šo sludinājumu.");
     }
-
-    if ($owner_id == 0) {
-    die("Īpašnieks nav atrasts šim sludinājumam.");
-    }
-    
-    if ($owner_id == $applicant_id) {
-    die("Jūs nevarat iesniegt pieteikumu uz savu sludinājumu.");
-    }
+    $check->close();
 
     // Saglabāt pieteikumu datubāzē
-    $stmt = $mysqli->prepare("
-    INSERT INTO jb_applications (listing_id, owner_id, applicant_id, message)
-    VALUES (?, ?, ?, ?)
+    $insert_stmt = $mysqli->prepare("
+        INSERT INTO jb_applications (listing_id, owner_id, applicant_id, message)
+        VALUES (?, ?, ?, ?)
     ");
-    
-    logActivity($mysqli, $_SESSION['id_users'], 'Jauns pieteikums', "Lietotājs pieteicās sludinājumam ID: $listing_id");
 
-    if (!$stmt) {
-        die("Insert prepare failed: " . $mysqli->error);
+    if (!$insert_stmt) {
+        die("SQL kļūda (Prepare failed): " . $mysqli->error);
     }
 
-    $message = !empty($phone) ? $phone : "";
+    $message = !empty($phone) ? $phone : "Nav norādīts";
 
-    $stmt->bind_param("iiis", $listing_id, $owner_id, $applicant_id, $message);
-    $stmt->execute();
+    $insert_stmt->bind_param("iiis", $listing_id, $owner_id, $applicant_id, $message);
+    
+    // Mēģinām saglabāt pieteikumu
+    if ($insert_stmt->execute()) {
+        
+        // 1. TIKAI TAD, ja izdevās saglabāt, mēs reģistrējam darbību arhīvā
+        logActivity($mysqli, $applicant_id, 'Jauns pieteikums', "Lietotājs pieteicās sludinājumam ID: $listing_id");
+        
+        // 2. Saglabājam veiksmes ziņu sesijā (lai next.php to varētu parādīt)
+        $_SESSION['success_msg'] = "Jūs veiksmīgi pieteicāties sludinājumam!";
+        
+        // 3. Pāradresējam atpakaļ uz sludinājumiem
+        header("Location: next.php");
+        exit();
 
-    header("Location: next.php");
-    exit();
+    } else {
+        // JA ŠIS PARĀDĀS, TEV IR PROBLĒMA AR TABULU "jb_applications"
+        die("Kļūda saglabājot pieteikumu datubāzē: " . $insert_stmt->error);
+    }
 }
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Īre</title>
+    <title>Pieteikties</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
 </head>
 
 <body class="p-4 bg-light">
-<a href="next.php" class="btn btn-secondary mb-3">Atpakaļ</a>
-<div class="container">
-    <form method="post">
-        <input type="hidden" name="listing_id" value="<?php echo $listing_id; ?>">
-    <table class="table table-striped table-bordered align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Tel. nr.</th>
-            </tr>
-        </thead>
-         <tbody>
-            <tr>
-                <td><input type="number" name="phone" class="form-control" placeholder="Telefona numurs (pēc izvēles)"></td>
-            </tr>
-        </tbody>
-    </table>
-     <button type="submit" class="btn btn-success">Iesniegt</button>
-    </form>
-
+    
+<div class="container" style="max-width: 600px; margin-top: 50px;">
+    <a href="next.php" class="btn btn-secondary mb-3">Atpakaļ</a>
+    
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h3 class="mb-4">Pieteikties sludinājumam</h3>
+            
+            <form method="post">
+                <input type="hidden" name="listing_id" value="<?php echo htmlspecialchars($listing_id); ?>">
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Jūsu telefona numurs (pēc izvēles)</label>
+                    <input type="text" name="phone" class="form-control" placeholder="Piemēram, 20000000">
+                    <div class="form-text">Īpašnieks to redzēs savā pieteikumu sarakstā.</div>
+                </div>
+                
+                <button type="submit" class="btn btn-success w-100">Iesniegt pieteikumu</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 </body>
