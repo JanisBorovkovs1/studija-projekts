@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="hidden" name="listing_id" value="<?php echo htmlspecialchars($listing_id); ?>">
                 
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Jūsu telefona numurs (pēc izvēles)</label>
+                    <label class="form-label fw-bold">Jūsu telefona numurs vai komentārs (pēc izvēles)</label>
                     <input type="text" name="phone" class="form-control" placeholder="Piemēram, 20000000">
                     <div class="form-text">Īpašnieks to redzēs savā pieteikumu sarakstā.</div>
                 </div>
