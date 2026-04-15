@@ -55,6 +55,7 @@ $result = $mysqli->query("
                                 <?php if ($row['is_read'] == 0): ?>
                                     <a href="mark_as_read.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-success">Atzīmēt kā lasītu</a>
                                 <?php endif; ?>
+                                <a href="admin_edit_application.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-primary">Labot</a>
                                 <a href="admin_delete_application.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tiešām dzēst?')">Dzēst</a>
                             </div>
                         </td>
