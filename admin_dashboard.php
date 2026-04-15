@@ -36,6 +36,7 @@ $result = $mysqli->query("SELECT * FROM jb_listings $order_by");
 <div class="d-flex justify-content-between mb-3 align-items-end flex-wrap gap-3">
     <div>
         <a href="next.php" class="btn btn-secondary">Atpakaļ</a>
+        <a href="admin_applications.php" class="btn btn-info">📩 Pārvaldīt pieteikumus</a>
         <a href="admin_add_listing.php" class="btn btn-success">Pievienot sludinājumu</a>
 
         <a href="archive.php" class="btn btn-info text-white">📜 Sistēmas arhīvs</a>
