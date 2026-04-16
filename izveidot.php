@@ -31,7 +31,7 @@ if (!isset($_SESSION['id_users'])) {
                         <input name="contact" class="form-control" placeholder="E-pasts vai tel. nr." required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Cena (EUR)</label>
+                        <label class="form-label fw-bold">Cena (EUR/h)</label>
                         <input type="number" step="0.01" name="price" class="form-control" placeholder="0.00" required>
                     </div>
                     <div class="mb-3">
@@ -40,7 +40,7 @@ if (!isset($_SESSION['id_users'])) {
                     </div>
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary w-100">Pievienot</button>
-                        <a href="admin_dashboard.php" class="btn btn-outline-secondary w-100">Atpakaļ</a>
+                        <a href="next.php" class="btn btn-outline-secondary w-100">Atpakaļ</a>
                     </div>
                 </form>
             </div>
